@@ -99,12 +99,14 @@ header {
     width:100%;
     margin-top:20px;
     display:flex;
+    animation: fadeIn 0.22s;
 }
 #inner{
     padding:11px;
     box-sizing: border-box;
     border-radius: 15px;
     box-shadow: 0 0 9px 0px rgba(0, 0, 0, 0.516);
+    animation: slideIn 0.22s;
     
 }
 .me{
@@ -114,7 +116,7 @@ header {
      
 }
 .notMe{
-    background:#686868;
+    background:#5a4e4e;
     color:#fff;
 }
 
@@ -127,7 +129,23 @@ header {
     color: #fff;
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
+@keyframes slideIn {
+    0% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 @media screen and (max-width: 408px) {
     .sendbutton {
         width: 20%;

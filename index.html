@@ -27,12 +27,15 @@
     </div>
 </div>
     
-
+<form onsubmit="return false;" id="messageForm">
         <div id="sendMsg" class="type">
             <input type="text" id="msgTxt" placeholder="Message..." class="messagetext">
-            <input type="submit" id="msgBtn" value="Send" onclick="module.sendMsg()" class="sendbutton">
+            <input type="submit" id="msgBtn" value="Send" onclick="module.sendMsg()" class="sendbutton" disabled>
         </div>
-
+</form>
+        <audio id="sound">
+            <source src="notif.mp3" type="audio/mpeg">
+        </audio>
     <script>
         module = {};
     </script>
@@ -65,26 +68,43 @@
             sender = prompt('What is your name?');
             sessionStorage.setItem('sender',sender);
         }
+        
 
-        // TO SEND MESSAGES
-        module.sendMsg = function sendMsg(){
-            var msg = msgTxt.value;
-            var timestamp = new Date().getTime();
-            set(ref(db,"messages/"+timestamp),{
-                msg : msg,
-                sender : sender
-            })
+    // Add an input event listener to the input field
+    msgTxt.addEventListener('input', function() {
+        // Enable the button if there is text, disable it if the input is empty
+        msgBtn.disabled = msgTxt.value.trim() === '';
+    });
 
-            msgTxt.value="";
-        }
+    // TO SEND MESSAGES
+    module.sendMsg = function sendMsg() {
+        var msg = msgTxt.value;
+        var timestamp = new Date().getTime();
+        set(ref(db, "messages/" + timestamp), {
+            msg: msg,
+            sender: sender
+        });
+
+        msgTxt.value = '';
+
+        // Disable the submit button after sending the message
+        msgBtn.disabled = true;
+    }
 
         // TO RECEIVE MSG
         onChildAdded(ref(db,"messages"), (data)=>{
             if(data.val().sender == sender){
-                messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>You : "+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>X</button></div></div>";
+                messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>"+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>X</button></div></div>";
             } else {
                 messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class=notMe>"+data.val().sender+" : "+data.val().msg+"</div></div>";
             }
+            // Check if #inner has been added
+    const innerElement = document.getElementById("inner");
+    if (innerElement) {
+        // Play the sound
+        const audio = document.getElementById("sound");
+        audio.play();
+    }
         })
 
         // TO DELETE MSG
@@ -113,5 +133,6 @@
         }
     </script>
     <script src="js/script.js"></script>
+    <script src="js/empty.js"></script>
 </body>
 </html>

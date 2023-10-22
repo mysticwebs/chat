@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('../images/bg.webp');
+    background-color: #ffffff;
     margin: 0;
     font-family: 'Rubik', sans-serif;
 }
@@ -13,7 +13,7 @@ body {
  }   
     
 header {
-    background-color: #999;
+    background-color: #ffffff;
     box-shadow: 0 0 9px 0px rgb(76 219 212);
   width: 100%;
   height: 55px;
@@ -40,6 +40,7 @@ header {
    text-align: center;
    display: flex;
    justify-content: space-between;
+   box-shadow: 0 0 9px 0px rgb(76 219 212);
 }
 .messagetext {
     margin: 0 10px;
@@ -103,7 +104,6 @@ header {
     padding:11px;
     box-sizing: border-box;
     border-radius: 15px;
-    margin-bottom: 10px;
     box-shadow: 0 0 9px 0px rgba(0, 0, 0, 0.516);
     
 }

@@ -10,7 +10,13 @@
 	<title>MYSTIC</title>
 	<link rel="icon" type="image/x-icon" href="images/icon.ico">
 </head>
-<body>
+<body onload="show();">
+    <div id = "myDiv">
+      <div>
+        <img id = "myImage" src = "images/logo.png" class="intro">
+        </div>
+    </div>
+    <div id="content" style="display: none;">
     
    <header>
     <center>
@@ -78,17 +84,23 @@
 
     // TO SEND MESSAGES
     module.sendMsg = function sendMsg() {
+        // Disable the submit button before sending the message
+        msgBtn.disabled = true;
+
         var msg = msgTxt.value;
         var timestamp = new Date().getTime();
         set(ref(db, "messages/" + timestamp), {
             msg: msg,
             sender: sender
+        }).then(() => {
+            // Clear the input field and re-enable the submit button after sending
+            msgTxt.value = '';
+            msgBtn.disabled = false;
+        }).catch(error => {
+            // Handle any errors here
+            console.error("Error sending message:", error);
+            msgBtn.disabled = false; // Re-enable the button if there's an error
         });
-
-        msgTxt.value = '';
-
-        // Disable the submit button after sending the message
-        msgBtn.disabled = true;
     }
 
         // TO RECEIVE MSG
@@ -134,5 +146,16 @@
     </script>
     <script src="js/script.js"></script>
     <script src="js/empty.js"></script>
+    <script type = "text/javascript">
+        function show() {
+            document.getElementById("myDiv").style.display="block";
+            setTimeout("hide()", 3000); // 1 wait, change the delay here
+        }
+    
+        function hide() {
+            document.getElementById("myDiv").style.display="none";
+            document.getElementById("content").style.display="block";
+        }
+    </script>
 </body>
 </html>

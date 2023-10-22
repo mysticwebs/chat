@@ -102,6 +102,7 @@ header {
     animation: fadeIn 0.22s;
 }
 #inner{
+    max-width: 90%;
     padding:11px;
     box-sizing: border-box;
     border-radius: 15px;
@@ -122,7 +123,9 @@ header {
 
 #dltMsg {
     border-radius: 50px;
-    margin-left: 20px;
+    float: right;
+    margin-left: 30px;
+    margin-top: 5px;
     font-size: 8px;
     background-color: #ff0000;
     border-color: transparent;
